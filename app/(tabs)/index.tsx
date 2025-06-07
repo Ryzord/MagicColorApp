@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,52 +9,48 @@ import {
 } from 'react-native';
 
 const COLORS = [
-  { name: 'white', label: 'Blanco', file: require('../../assets/images/combinations/MonoWhite.png') },
-  { name: 'blue', label: 'Azul', file: require('../../assets/images/combinations/MonoBlue.png') },
-  { name: 'black', label: 'Negro', file: require('../../assets/images/combinations/MonoBlack.png') },
-  { name: 'red', label: 'Rojo', file: require('../../assets/images/combinations/MonoRed.png') },
-  { name: 'green', label: 'Verde', file: require('../../assets/images/combinations/MonoGreen.png') },
+  { name: 'white', label: 'Blanco', colorCode: '#FFFFFF' },
+  { name: 'blue', label: 'Azul', colorCode: '#0000FF' },
+  { name: 'black', label: 'Negro', colorCode: '#000000' },
+  { name: 'red', label: 'Rojo', colorCode: '#FF0000' },
+  { name: 'green', label: 'Verde', colorCode: '#008000' },
 ];
 
-const COMBINACIONES: Record<string, { nombre: string; imagen: any }> = {
-  'black': { nombre: 'Negro', imagen: require('../../assets/images/combinations/MonoBlack.png') },
-  'black,blue': { nombre: 'Dimir', imagen: require('../../assets/images/combinations/Dimir.png') },
-  'black,green': { nombre: 'Golgari', imagen: require('../../assets/images/combinations/Golgari.png') },
-  'black,red': { nombre: 'Rakdos', imagen: require('../../assets/images/combinations/Rakdos.png') },
-  'black,white': { nombre: 'Orzhov', imagen: require('../../assets/images/combinations/Orzhov.png') },
-  'blue': { nombre: 'Azul', imagen: require('../../assets/images/combinations/MonoBlue.png') },
-  'blue,green': { nombre: 'Simic', imagen: require('../../assets/images/combinations/Simic.png') },
-  'blue,red': { nombre: 'Izzet', imagen: require('../../assets/images/combinations/Izzet.png') },
-  'blue,white': { nombre: 'Azorius', imagen: require('../../assets/images/combinations/Azorius.png') },
-  'green': { nombre: 'Verde', imagen: require('../../assets/images/combinations/MonoGreen.png') },
-  'green,red': { nombre: 'Gruul', imagen: require('../../assets/images/combinations/Gruul.png') },
-  'green,white': { nombre: 'Selesnya', imagen: require('../../assets/images/combinations/Selesnya.png') },
-  'red': { nombre: 'Rojo', imagen: require('../../assets/images/combinations/MonoRed.png') },
-  'red,white': { nombre: 'Boros', imagen: require('../../assets/images/combinations/Boros.png') },
-  'white': { nombre: 'Blanco', imagen: require('../../assets/images/combinations/MonoWhite.png') },
+// Definición COMBINACIONES igual que antes, omito por brevedad (igual que en tu código original)
 
-  // Tri-colores (ordenadas alfabéticamente también)
-  'black,blue,red': { nombre: 'Grixis', imagen: require('../../assets/images/combinations/Grixis.png') },
-  'black,green,white': { nombre: 'Abzan', imagen: require('../../assets/images/combinations/Abzan.png') },
-  'blue,green,red': { nombre: 'Temur', imagen: require('../../assets/images/combinations/Temur.png') },
-  'green,red,white': { nombre: 'Naya', imagen: require('../../assets/images/combinations/Naya.png') },
-  'black,red,white': { nombre: 'Mardu', imagen: require('../../assets/images/combinations/Mardu.png') },
-  'black,blue,green': { nombre: 'Sultai', imagen: require('../../assets/images/combinations/Sultai.png') },
-  'blue,red,white': { nombre: 'Jeskai', imagen: require('../../assets/images/combinations/Jeskai.png') },
-  'blue,green,white': { nombre: 'Bant', imagen: require('../../assets/images/combinations/Bant.png') },
-  'black,green,red': { nombre: 'Jund', imagen: require('../../assets/images/combinations/Jund.png') },
-  'black,blue,white': { nombre: 'Esper', imagen: require('../../assets/images/combinations/Esper.png') },
-
-  // Cuatro y cinco colores: igual, orden alfabético
-  'black,blue,green,red': { nombre: 'Glint', imagen: null/*require('../../assets/images/combinations/Glint.png')*/ },
-  'black,blue,green,white': { nombre: 'Witch', imagen: null/*require('../../assets/images/combinations/Witch.png')*/ },
-  'black,green,red,white': { nombre: 'Dune', imagen: null/*require('../../assets/images/combinations/Dune.png')*/ },
-  'blue,green,red,white': { nombre: 'Ink', imagen: null/*require('../../assets/images/combinations/Ink.png')*/ },
-  'black,blue,red,white': { nombre: 'Yore', imagen: null/*require('../../assets/images/combinations/Yore.png')*/ },
-
-  'black,blue,green,red,white': { nombre: 'Dominio', imagen: null/*require('../../assets/images/combinations/FiveColor.png')*/ },
+const COMBINACIONES: Record<string, { nombre: string; imagen?: any }> = {
+  'black': { nombre: 'Negro' },
+  'black,blue': { nombre: 'Dimir' },
+  'black,green': { nombre: 'Golgari' },
+  'black,red': { nombre: 'Rakdos' },
+  'black,white': { nombre: 'Orzhov' },
+  'blue': { nombre: 'Azul' },
+  'blue,green': { nombre: 'Simic' },
+  'blue,red': { nombre: 'Izzet' },
+  'blue,white': { nombre: 'Azorius' },
+  'green': { nombre: 'Verde' },
+  'green,red': { nombre: 'Gruul' },
+  'green,white': { nombre: 'Selesnya' },
+  'red': { nombre: 'Rojo' },
+  'red,white': { nombre: 'Boros' },
+  'white': { nombre: 'Blanco' },
+  'black,blue,red': { nombre: 'Grixis' },
+  'black,green,white': { nombre: 'Abzan' },
+  'blue,green,red': { nombre: 'Temur' },
+  'green,red,white': { nombre: 'Naya' },
+  'black,red,white': { nombre: 'Mardu' },
+  'black,blue,green': { nombre: 'Sultai' },
+  'blue,red,white': { nombre: 'Jeskai' },
+  'blue,green,white': { nombre: 'Bant' },
+  'black,green,red': { nombre: 'Jund' },
+  'black,blue,white': { nombre: 'Esper' },
+  'black,blue,green,red': { nombre: 'Glint' },
+  'black,blue,green,white': { nombre: 'Witch' },
+  'black,green,red,white': { nombre: 'Dune' },
+  'blue,green,red,white': { nombre: 'Ink' },
+  'black,blue,red,white': { nombre: 'Yore' },
+  'black,blue,green,red,white': { nombre: 'Dominio' },
 };
-
 
 export default function App() {
   const [seleccionados, setSeleccionados] = useState<string[]>([]);
@@ -107,18 +102,29 @@ export default function App() {
       <Text style={styles.titulo}>Colores Magic: The Gathering</Text>
       <Text style={styles.subtitulo}>Selecciona los colores</Text>
 
-      <View style={styles.iconos}>
-        {COLORS.map(color => (
-          <TouchableOpacity key={color.name} onPress={() => toggleColor(color.name)}>
-            <Image
-              source={color.file}
+      <View style={styles.botonesContainer}>
+        {COLORS.map(color => {
+          const seleccionado = seleccionados.includes(color.name);
+          return (
+            <TouchableOpacity
+              key={color.name}
               style={[
-                styles.icono,
-                seleccionados.includes(color.name) && styles.iconoSeleccionado,
+                styles.botonColor,
+                { backgroundColor: color.colorCode },
+                seleccionado && styles.botonColorSeleccionado,
               ]}
-            />
-          </TouchableOpacity>
-        ))}
+              onPress={() => toggleColor(color.name)}
+              activeOpacity={0.7}
+            >
+              <Text style={[
+                styles.botonTextoColor,
+                color.name === 'white' ? { color: '#000' } : { color: '#FFF' }
+              ]}>
+                {color.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       <Text style={styles.subtitulo}>Colores seleccionados:</Text>
@@ -142,9 +148,6 @@ export default function App() {
       {resultado && (
         <View style={styles.resultado}>
           <Text style={styles.resultadoNombre}>{resultado.nombre}</Text>
-          {resultado.imagen && (
-            <Image source={resultado.imagen} style={styles.resultadoImagen} />
-          )}
         </View>
       )}
     </ScrollView>
@@ -153,16 +156,48 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: { padding: 20, alignItems: 'center' },
-  titulo: { fontSize: 24, fontWeight: 'bold', color: 'green', marginBottom: 20 },
+  titulo: { fontSize: 24, fontWeight: 'bold', color: 'green', marginBottom: 20, marginTop: 35 },
   subtitulo: { fontSize: 18, marginTop: 10, marginBottom: 10 },
-  iconos: { flexDirection: 'row', gap: 10, flexWrap: 'wrap', justifyContent: 'center' },
-  icono: { width: 50, height: 50, opacity: 0.5, margin: 5 },
-  iconoSeleccionado: { opacity: 1, borderWidth: 2, borderColor: 'green', borderRadius: 10 },
-  input: { borderWidth: 1, width: 200, padding: 8, marginVertical: 10, borderRadius: 5 },
-  boton: { backgroundColor: '#ccc', padding: 10, borderRadius: 5 },
-  botonTexto: { fontWeight: 'bold' },
+  botonesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+    flexWrap: 'wrap',
+  },
+  botonColor: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    margin: 5,
+    opacity: 0.1,
+  },
+  botonColorSeleccionado: {
+    opacity: 1,
+    borderWidth: 3,
+    borderColor: 'purple',
+  },
+  botonTextoColor: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    width: 200,
+    padding: 8,
+    marginVertical: 10,
+    borderRadius: 5,
+  },
+  boton: {
+    backgroundColor: '#ccc',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  botonTexto: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   resultadoTitulo: { fontSize: 20, marginTop: 20 },
   resultado: { alignItems: 'center', marginTop: 10 },
   resultadoNombre: { fontSize: 18, fontWeight: 'bold' },
-  resultadoImagen: { width: 100, height: 100, marginTop: 10 },
 });
